@@ -2,7 +2,7 @@ import React from "react";
 import List from "./List";
 import Button from "./Button";
 
-const Card = ({ tasks, onDelete, onAdd, onToggle }) => {
+const Card = ({ tasks, onDelete, onAdd, onToggle, onInput }) => {
   return (
     <div className="flex justify-center items-center">
       <div className="card w-192 bg-base-100 shadow-xl ">
@@ -17,7 +17,7 @@ const Card = ({ tasks, onDelete, onAdd, onToggle }) => {
             <h2 className="card-title">Task Manager</h2>
             <Button onAdd={onAdd}/>
           </div>
-          <List tasks={tasks} onDelete={onDelete} onToggle={onToggle} />
+          <List tasks={tasks} onDelete={onDelete} onToggle={onToggle} onInput={onInput} />
         </div>
       </div>
     </div>

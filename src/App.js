@@ -85,12 +85,33 @@ const App = () => {
     );
   };
 
+  // Toggle Done
+  const changeName = async (id, newText) => {
+    const taskToToggle = await fetchTask(id);
+    const updTask = { ...taskToToggle, text: newText };
+
+    await fetch(`${backend}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(updTask),
+    });
+
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, text: newText } : task
+      )
+    );
+  };
+
   return (
     <Card
       tasks={tasks}
       onDelete={deleteTask}
       onAdd={addTask}
       onToggle={toggleDone}
+      onInput={changeName}
     />
   );
 };
