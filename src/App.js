@@ -16,6 +16,14 @@ const App = () => {
     getTasks();
   }, []);
 
+  // Fetch Task
+  const fetchTask = async (id) => {
+    const res = await fetch(`${backend}/${id}`);
+    const data = await res.json();
+
+    return data;
+  };
+
   // Fetch Tasks
   const fetchTasks = async () => {
     const res = await fetch(`${backend}`);
@@ -29,34 +37,62 @@ const App = () => {
     const res = await fetch(`${backend}/${id}`, {
       method: "DELETE",
     });
-    
+
     res.status === 204
       ? setTasks(tasks.filter((task) => task.id !== id))
       : alert("Error Deleting This Task");
   };
 
-    // Add Task
-    const addTask = async () => {
-      const task = {
-        text: "new task",
-        day: "none",
-        remider: false
-      }
-      
-      const res = await fetch(`${backend}`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(task),
-      })
-  
-      const data = await res.json()
-  
-      setTasks([...tasks, data])
-    }
+  // Add Task
+  const addTask = async () => {
+    const task = {
+      text: "new task",
+      day: "none",
+      remider: false,
+    };
 
-  return <Card tasks={tasks} onDelete={deleteTask} onAdd={addTask} />;
+    const res = await fetch(`${backend}`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(task),
+    });
+
+    const data = await res.json();
+
+    setTasks([...tasks, data]);
+  };
+
+  // Toggle Done
+  const toggleDone = async (id) => {
+    const taskToToggle = await fetchTask(id);
+    const toggle = !taskToToggle.reminder;
+    const updTask = { ...taskToToggle, reminder: toggle };
+
+    await fetch(`${backend}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(updTask),
+    });
+
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, reminder: toggle } : task
+      )
+    );
+  };
+
+  return (
+    <Card
+      tasks={tasks}
+      onDelete={deleteTask}
+      onAdd={addTask}
+      onToggle={toggleDone}
+    />
+  );
 };
 
 export default App;

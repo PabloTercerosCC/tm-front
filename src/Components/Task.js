@@ -2,14 +2,14 @@ import React from "react";
 import { FaTimes } from 'react-icons/fa'
 import CheckBox from "./CheckBox";
 
-const Task = ({ task, index, onDelete }) => {
+const Task = ({ index, task, onDelete, onToggle }) => {
   return (
     <tr>
       <th>{index + 1}</th>
       <td>{task.text}</td>
       <td>{task.day}</td>
       <td>
-        <CheckBox/>
+        <CheckBox id={task.id} isDone={task.reminder} onToggle={onToggle}/>
       </td>
       <td>
       <FaTimes

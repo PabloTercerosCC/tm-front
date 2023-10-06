@@ -1,7 +1,7 @@
 import React from "react";
 import Task from "./Task";
 
-const List = ({tasks, onDelete}) => {
+const List = ({tasks, onDelete, onToggle}) => {
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -16,7 +16,7 @@ const List = ({tasks, onDelete}) => {
         </thead>
         <tbody>
             {tasks.map((task, index) => (
-            <Task task={task} index={index} onDelete={onDelete}/>
+            <Task key={index} index={index} task={task} onDelete={onDelete} onToggle={onToggle}/>
         ))}
         </tbody>
       </table>
