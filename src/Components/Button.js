@@ -1,8 +1,13 @@
 import React from "react";
 
 const Button = ({onAdd}) => {
+  const buttonStyle = {
+    backgroundColor: '#94a3b8',
+    color: 'black' // Change this to the color you want for the text
+  };
+
   return (
-    <button className="btn btn-square" onClick={() => onAdd()}>
+    <button style={buttonStyle} className="btn btn-square" onClick={() => onAdd()}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-6 w-6"
