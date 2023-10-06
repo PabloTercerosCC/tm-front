@@ -13,7 +13,9 @@ const Task = ({ index, task, onDelete, onToggle, onInput }) => {
 
   const handleKeyDown = (event) => {
     if (!isVisible && event.key === "Enter") {
-      onInput(task.id, inputText);
+      if (inputText != "") {
+        onInput(task.id, inputText);
+      }
       setIsVisible(true);
     }
   };
