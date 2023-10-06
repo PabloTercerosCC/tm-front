@@ -5,7 +5,6 @@ import "./App.css";
 const backend = "http://localhost:5100/api/tasks";
 
 const App = () => {
-  const [showAddTask, setShowAddTask] = useState(false);
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -36,7 +35,28 @@ const App = () => {
       : alert("Error Deleting This Task");
   };
 
-  return <Card tasks={tasks} onDelete={deleteTask} />;
+    // Add Task
+    const addTask = async () => {
+      const task = {
+        text: "new task",
+        day: "none",
+        remider: false
+      }
+      
+      const res = await fetch(`${backend}`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(task),
+      })
+  
+      const data = await res.json()
+  
+      setTasks([...tasks, data])
+    }
+
+  return <Card tasks={tasks} onDelete={deleteTask} onAdd={addTask} />;
 };
 
 export default App;
