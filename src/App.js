@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Card from "./Components/Card";
 import "./App.css";
 
-const backend = "http://localhost:5100/api/tasks";
+const backend = "https://task-manager-backend.azurewebsites.net";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
